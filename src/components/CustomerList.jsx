@@ -21,6 +21,8 @@ import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import { customerService, trainingService } from '../services/api';
 import CustomerDialog from './CustomerDialog';
 import TrainingDialog from './TrainingDialog';
+import DownloadIcon from '@mui/icons-material/Download';
+import { exportToCSV } from '../utils/exportUtils';
 
 function CustomerList() {
   const [customers, setCustomers] = useState([]);
@@ -165,6 +167,10 @@ function CustomerList() {
       .toLowerCase()
       .includes(filterText.toLowerCase())
   );
+  
+  const handleExport = () => {
+    exportToCSV(customers);
+  };
 
   return (
     <div>
@@ -175,13 +181,22 @@ function CustomerList() {
             Customer List
           </Typography>
         </Box>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={handleAddCustomer}
-        >
-          Add Customer
-        </Button>
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          <Button
+            variant="outlined"
+            startIcon={<DownloadIcon />}
+            onClick={handleExport}
+          >
+            Export CSV
+          </Button>
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={handleAddCustomer}
+          >
+            Add Customer
+          </Button>
+        </Box>
       </Box>
 
       <Box sx={{ mb: 2 }}>
