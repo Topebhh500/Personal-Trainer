@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import PeopleIcon from '@mui/icons-material/People';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 function Navigation() {
   const [open, setOpen] = useState(false);
@@ -25,7 +26,8 @@ function Navigation() {
 
   const menuItems = [
     { text: 'Customers', icon: <PeopleIcon />, path: '/customers' },
-    { text: 'Trainings', icon: <FitnessCenterIcon />, path: '/trainings' }
+    { text: 'Trainings', icon: <FitnessCenterIcon />, path: '/trainings' },
+    { text: 'Calendar', icon: <CalendarMonthIcon />, path: '/calendar' }
   ];
 
   return (
