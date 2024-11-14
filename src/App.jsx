@@ -18,7 +18,7 @@ function App() {
             <Toolbar>
               <Navigation />
               <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml: 2 }}>
-                Personal Trainer
+                Topsite Personal Trainer
               </Typography>
             </Toolbar>
           </AppBar>
