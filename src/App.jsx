@@ -7,6 +7,7 @@ import CustomerList from './components/CustomerList';
 import TrainingList from './components/TrainingList';
 import TrainingCalendar from './components/TrainingCalendar';
 import Navigation from './components/Navigation';
+import TrainingStats from './components/TrainingStats';
 
 function App() {
   return (
@@ -23,10 +24,11 @@ function App() {
           </AppBar>
           <Container maxWidth="xl" sx={{ mt: 4 }}>
             <Routes>
-              <Route path="/" element={<CustomerList />} />
+              <Route path="/" element={<TrainingStats />} />
               <Route path="/customers" element={<CustomerList />} />
               <Route path="/trainings" element={<TrainingList />} />
               <Route path="/calendar" element={<TrainingCalendar />} />
+              <Route path="/statistics" element={<TrainingStats />} />
             </Routes>
           </Container>
         </Box>

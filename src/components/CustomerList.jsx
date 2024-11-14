@@ -42,7 +42,7 @@ function CustomerList() {
     { field: 'city', headerName: 'City', sortable: true, filter: true, flex: 1 },
     {
       headerName: 'Actions',
-      width: 180,
+      flex: 1 ,
       cellRenderer: params => (
         <Box sx={{ display: 'flex', gap: 1 }}>
           <IconButton
@@ -148,11 +148,17 @@ function CustomerList() {
 
   const handleSaveTraining = async (trainingData, customerLinks) => {
     try {
+      if (!trainingData.date || !trainingData.activity || !trainingData.duration) {
+        showSnackbar('Please fill in all required fields', 'error');
+        return;
+      }
+  
       await trainingService.addTraining(trainingData, customerLinks);
       showSnackbar('Training added successfully');
       setTrainingDialog({ open: false, customer: null });
     } catch (error) {
-      showSnackbar('Error adding training', 'error');
+      console.error('Error adding training:', error);
+      showSnackbar('Error adding training: ' + (error.message || 'Unknown error'), 'error');
     }
   };
 
@@ -174,30 +180,30 @@ function CustomerList() {
 
   return (
     <div>
-      <Box sx={{ mb: 3, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <PeopleIcon sx={{ fontSize: 32, color: 'primary.main' }} />
-          <Typography variant="h4" component="h1">
-            Customer List
-          </Typography>
-        </Box>
-        <Box sx={{ display: 'flex', gap: 2 }}>
-          <Button
-            variant="outlined"
-            startIcon={<DownloadIcon />}
-            onClick={handleExport}
-          >
-            Export CSV
-          </Button>
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={handleAddCustomer}
-          >
-            Add Customer
-          </Button>
-        </Box>
+    <Box sx={{ mb: 3, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <PeopleIcon sx={{ fontSize: 32, color: 'primary.main' }} />
+        <Typography variant="h4" component="h1">
+          Customer List
+        </Typography>
       </Box>
+      <Box sx={{ display: 'flex', gap: 2 }}>
+        <Button
+          variant="outlined"
+          startIcon={<DownloadIcon />}
+          onClick={handleExport}
+        >
+          Export CSV
+        </Button>
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={handleAddCustomer}
+        >
+          Add Customer
+        </Button>
+      </Box>
+    </Box>
 
       <Box sx={{ mb: 2 }}>
         <TextField

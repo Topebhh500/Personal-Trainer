@@ -14,15 +14,17 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.10",
     "@mui/material": "^5.15.10",
-    "@mui/x-date-pickers": "^5.0.20",
+    "@mui/x-date-pickers": "^6.19.0",
     "ag-grid-community": "^31.0.3",
     "ag-grid-react": "^31.0.3",
-    "date-fns": "^2.29.3",
+    "date-fns": "^2.30.0",
+    "lodash": "^4.17.21",
     "personal-trainer": "file:",
     "react": "^18.2.0",
     "react-big-calendar": "^1.15.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.1"
+    "react-router-dom": "^6.22.1",
+    "recharts": "^2.13.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.55",

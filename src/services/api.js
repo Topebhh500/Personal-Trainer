@@ -54,48 +54,78 @@ export const customerService = {
 };
 
 export const trainingService = {
-  getAllTrainings: async () => {
-    try {
-      const response = await fetch(`${BASE_URL}/gettrainings`);
-      if (!response.ok) throw new Error('Failed to fetch trainings');
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching trainings:', error);
-      throw error;
+    getAllTrainings: async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/gettrainings`);
+        if (!response.ok) throw new Error('Failed to fetch trainings');
+        return await response.json();
+      } catch (error) {
+        console.error('Error fetching trainings:', error);
+        throw error;
+      }
+    },
+  
+    addTraining: async (training, customerLinks) => {
+      try {
+        const formattedTraining = {
+          date: training.date.toISOString(),
+          duration: parseInt(training.duration),
+          activity: training.activity,
+          customer: customerLinks.self.href
+        };
+  
+        const response = await fetch(`${BASE_URL}/trainings`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formattedTraining)
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to add training');
+        }
+  
+        return await response.json();
+      } catch (error) {
+        console.error('Error adding training:', error);
+        throw error;
+      }
+    },
+  
+    deleteTraining: async (id) => {
+      try {
+        const response = await fetch(`${BASE_URL}/trainings/${id}`, { 
+          method: 'DELETE' 
+        });
+        if (!response.ok) throw new Error('Failed to delete training');
+      } catch (error) {
+        console.error('Error deleting training:', error);
+        throw error;
+      }
     }
-  },
+  };
 
-  addTraining: async (training, customerLinks) => {
-    try {
-      const formattedTraining = {
-        date: training.date.toISOString(),
-        duration: parseInt(training.duration),
-        activity: training.activity,
-        customer: customerLinks.self.href
-      };
-
-      const response = await fetch(`${BASE_URL}/trainings`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formattedTraining)
-      });
-      if (!response.ok) throw new Error('Failed to add training');
-      return await response.json();
-    } catch (error) {
-      console.error('Error adding training:', error);
-      throw error;
+  export const systemService = {
+    resetDatabase: async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/reset`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'text/plain'
+          }
+        });
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(errorText || 'Failed to reset database');
+        }
+  
+        const text = await response.text();
+        console.log('Reset response:', text); // For debugging
+        return text === 'DB reset done';
+      } catch (error) {
+        console.error('Error resetting database:', error);
+        throw error;
+      }
     }
-  },
-
-  deleteTraining: async (id) => {
-    try {
-      const response = await fetch(`${BASE_URL}/trainings/${id}`, { 
-        method: 'DELETE' 
-      });
-      if (!response.ok) throw new Error('Failed to delete training');
-    } catch (error) {
-      console.error('Error deleting training:', error);
-      throw error;
-    }
-  }
-};
+  };
